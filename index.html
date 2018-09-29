@@ -1,85 +1,272 @@
 <!DOCTYPE html>
-<html lang="en-GB">
-    <head>
-        <link href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/shift.css" rel="stylesheet">
-        <link rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
-		<!--<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">-->
-        <meta charset="utf-8"/>
-		<link rel="stylesheet" href="main.css">
-        <title>The Standard Model</title>
-		<!--these styles are specific for this page so embedded for easier access-->
-        <style>
-            #exp {
-                font-size: 15;
-                font-family: Tahoma, sans-serif;
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Conway's Game of Life</title>
+    <style>
+      body, html {
+        overflow: hidden;
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id='c' width='600' height='600'></canvas>
+    <br>
+    <button type='button' id='nextGen' onclick='doAll()'>Next Generation</button>
+    <button type='button' id='startRepeat' onclick='go = setInterval(doAll, 1000/fps)'>Start automatic ticks</button><button type='button' id='stopRepeat' onclick='clearInterval(go)'>Stop</button>
+    <br><button id='reset' type='button' onclick='brickReset();draw()'>Reset canvas (random)</button>
+    <button type='button' onclick='letDrawState()'>Draw initial state</button>
+    <button type='button' onclick='clearCanvas()'>Clear canvas</button>
+    <br><button type='button' onclick='loadGosper()'>Load the Gosper Glider gun</button>
+    <script>
+      var canvas, ctx;
+      var fps = 10;
+      var go;
+      window.onload = function (){
+        canvas = document.getElementById('c');
+        ctx = canvas.getContext('2d');
+        
+        brickReset();
+        doAll();
+        //var fps = 2;
+        //setInterval(doAll, 1000/fps);
+        
+        
+        //to move paddle
+        canvas.addEventListener('mousemove', updateMPos);
+      }
+      
+      const BRICK_W=10;
+      const BRICK_H=10;
+      const BRICK_Cs=70;
+      const BRICK_Rs=70;
+      const GAP=2;
+      var bricks = new Array(BRICK_Cs*BRICK_Rs);
+      var nextBricks = new Array(BRICK_Cs*BRICK_Rs);
+      
+      var mouseX, mouseY;
+      function updateMPos(evt){
+        var rect = canvas.getBoundingClientRect();
+        var root = document.documentElement;
+        mouseX = evt.clientX - rect.left - root.scrollLeft;
+        mouseY = evt.clientY - rect.top - root.scrollTop;
+        //paddleX = mouseX-PADDLE_W/2;
+        
+        /*//cheat
+        bX = mouseX;
+        bY = mouseY;
+        bSX = 2;
+        bSY = -2;*/
+      }
+      
+      function clearCanvas(){
+        for(var i=0;i<bricks.length;i++){
+          bricks[i]=false;
+        }
+        draw();
+      }
+      
+      function brickReset(){
+        for(var i=0;i<BRICK_Cs*BRICK_Rs;i++){
+          var bool = Math.floor(Math.random()*2);
+          if(bool){
+            bricks[i] = true;
+          } else if(!bool) {
+            bricks[i]=false;
+          }
+        }//end of for each brick
+      }//end of brickReset
+      
+      function doAll() {
+        move();
+        draw();
+      }
+      
+      function isBrThere(col, row){
+        if( col >= 0 && col < BRICK_Cs &&
+            row >= 0 && row <  BRICK_Rs){
+          var brCoordIndex = findIndex(col,row);
+          return bricks[brCoordIndex];
+        } else {
+          return false;
+        }
+      }
+      
+      function brCheck(){
+        for(var iR=0;iR<BRICK_Rs;iR++){
+          for(var iC=0;iC<BRICK_Cs;iC++){
+            var index = findIndex(iC, iR);
+            var nNeighbs = 0;
+            if(isBrThere(iC-1,iR)) nNeighbs++;//left brick
+            if(isBrThere(iC+1,iR)) nNeighbs++;//right
+            if(isBrThere(iC,iR-1)) nNeighbs++;//above
+            if(isBrThere(iC,iR+1)) nNeighbs++;//below
+            if(isBrThere(iC-1,iR-1)) nNeighbs++;//top left
+            if(isBrThere(iC-1,iR+1)) nNeighbs++;//bottom left
+            if(isBrThere(iC+1,iR-1)) nNeighbs++;//top right
+            if(isBrThere(iC+1,iR+1)) nNeighbs++;//bottom right
+            
+            if(nNeighbs<2){
+              nextBricks[index] = false;
+              //dies
+            } else if(nNeighbs==3 && !bricks[index]){
+              nextBricks[index] = true;
+              //is born
+            } else if ((nNeighbs==2||nNeighbs==3)&&bricks[index]){
+              nextBricks[index] = true;
+              //lives
+            } else if (nNeighbs>3){
+              nextBricks[index] = false;
+              //dies
             }
-            #a {
-                font-size: 15;
-                font-family: Georgia, serif;
+          }
+        }
+        for(var i=0;i<bricks.length;i++){
+          bricks[i] = nextBricks[i];
+        }
+      }
+      
+      //Ball-brick collision algorithm
+      /*function bBrCollision(){
+        var ballBrX = Math.floor(bX/BRICK_W);
+        var ballBrY = Math.floor(bY/BRICK_H);
+        var brBIndex = findIndex(ballBrX,ballBrY);
+        
+        if(ballBrX >= 0 &&
+          ballBrX < BRICK_Cs &&
+          ballBrY >= 0 &&
+          ballBrY <  BRICK_Rs){
+            
+          if(isBrThere(ballBrX, ballBrY)){
+            bricks[brBIndex] = false;
+            remainingBr--;
+            
+            var prevBX = bX-bSX;
+            var prevBY = bY-bSY;
+            var prevBrC = Math.floor(prevBX / BRICK_W);
+            var prevBrR = Math.floor(prevBY / BRICK_H);
+            
+            var cFD = true;
+            
+            if (prevBrC!=ballBrX){
+              if(isBrThere(prevBrC, ballBrY)==false){
+                bSX*=-1;
+                cFD = false;
+              }
             }
-			.jumbotron {
-				background: url("particles_names_background.png");
-				background-attachment: fixed;
-				background-position: center center;
-				background-repeat: no-repeat;
-				background-size: cover;
-			}
-			
-		</style>
-    </head>
-	<body>
-		<!-- nav bar -->
-		<div class="nav">
-			<div class="container">
-				<ul class="pull-left"> <!--left side of nav menu -->
-					<li><a href="index.html">Home</a></li>
-					<li><a href="overview.html">Overview</a></li>
-					<div class="dropdown"> <!-- dropdown menu -->
-						<button class="dropbtn">
-							Particles
-						</button>
-						<!-- items inside dropdown menu -->
-						<div class="dropdown-content">
-							<li><a href="quarks.html">Quarks</a></li>
-							<li><a href="leptons.html">Leptons</a></li>
-							<li><a href="bosons.html">Bosons</a></li>
-						</div>
-					</div>
-				</ul>
-				<!-- end of dropdown and of left side -->
-				<!-- right side of nav bar -->
-				<ul class="pull-right" id="sort">
-					<li><a href="Learn%20More.html">Learn More</a></li>
-					<li><a href="Contact%20Us.html">Contact Us</a></li>
-				</ul>
-			</div>
-		</div>
-		<!-- end of nav bar -->
-		<br><br><br><!-- these are here because the nav bar stays at the top, so part of the jumbotron would be hidden -->
-		<div class="jumbotron"><!-- main jumbotron title area -->
-			<div class="container">
-				<br>
-				<h1>The Standard Model</h1>
-				<h2>A short guide by Ben Fuller</h2>
-				<br>
-			</div>
-		</div><br><!-- end of jumbotron -->
-		<div class="learn-more"><!-- container for text underneath -->
-			<div class="container">
-				<div id="exp">
-					<p>This website aims to give you a brief explanation of the particles in the Standard Model of Particle Physics, an understanding of how these particles are discovered, and also featuring a special article on the Higgs Boson and Field.</p>
-					</div>
-				<p>Please note the author is not in any way professional, or educated in these matters - he has done simple research on the internet and in various books and this website is a collection of some of his findings.</p>
-				<div id="a"><!-- this area is specified so that it has a different font-family -->
-					<p>So what are you waiting for? Get started by clicking on 'Overview' at the top of the page.</p>
-				</div>
-				<br>
-				<div id="particle"><!-- particle - vibrates when you hover over it !!! -->
-					<center>
-						<img src="particlea.png"/>
-					</center>
-				</div><!-- end of particle -->		
-			</div>
-		</div><!-- end of learn-more container -->
-    </body>
+            if (prevBrR!=ballBrY){
+              if(isBrThere(ballBrX, prevBrR)==false){
+                bSY*=-1;
+                cFD = false;
+              }
+            }
+            if(cFD){
+              bSX*=-1;
+              bSY*=-1;
+            }
+            
+          }// end of brick found
+          
+        }// end of valid brick
+      }// end of bBrCollision*/
+      
+      function getMousePos(evt){
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+      
+      function letDrawState(){
+        clearInterval(go);
+        //ctx.globalAlpha=0.5;
+        draw();
+        canvas.addEventListener('mousedown', function(evt) {
+          var mousePos = getMousePos(evt);
+          doDrawState(mousePos);
+          //alert(mousePos.x+', '+mousePos.y);
+        });
+      }
+      function doDrawState(mPos){
+        var mBrX = Math.floor(mPos.x/BRICK_W);
+        var mBrY = Math.floor(mPos.y/BRICK_H);
+        var brMIndex = findIndex(mBrX,mBrY);
+        
+        if(mBrX >= 0 &&
+          mBrX < BRICK_Cs &&
+          mBrY >= 0 &&
+          mBrY <  BRICK_Rs){
+            
+          if(!isBrThere(mBrX, mBrY)){
+            bricks[brMIndex] = true;
+            //colRect(BRICK_W*mBrX,BRICK_H*mBrY, BRICK_W-GAP,BRICK_H-GAP, '#8b4513');
+          } else if(isBrThere(mBrX, mBrY)){
+            bricks[brMIndex] = false;
+            //colRect(BRICK_W*mBrX,BRICK_H*mBrY, BRICK_W-GAP,BRICK_H-GAP, 'beige');
+          }
+          
+        }
+        draw();
+      }
+      
+      function move() {
+        brCheck();
+      }
+      
+      function loadGosper(){
+        //clearInterval(go);
+        clearCanvas();
+        
+        colorIn(2,8);colorIn(2,9);colorIn(3,8);colorIn(3,9);
+        colorIn(12,8);colorIn(12,9);colorIn(12,10);colorIn(13,7);colorIn(13,11);colorIn(14,6);colorIn(14,12);colorIn(15,6);colorIn(15,12);colorIn(16,9);colorIn(17,7);colorIn(17,11);colorIn(18,8);colorIn(18,9);colorIn(18,10);colorIn(19,9);
+        colorIn(22,6);colorIn(22,7);colorIn(22,8);colorIn(23,6);colorIn(23,7);colorIn(23,8);colorIn(24,5);colorIn(24,9);colorIn(26,4);colorIn(26,5);colorIn(26,9);colorIn(26,10);
+        colorIn(36,6);colorIn(36,7);colorIn(37,6);colorIn(37,7);
+        
+        draw();
+      }
+      
+      function colorIn(col, row){
+        var index = findIndex(col, row);
+        bricks[index] = true;
+      }
+      
+      function findIndex(col, row){
+        return col + BRICK_Cs *row;
+      }
+      
+      function drawBricks(){
+        for(var iR=0;iR<BRICK_Rs;iR++){
+          for(var iC=0;iC<BRICK_Cs;iC++){
+            
+            var index = findIndex(iC, iR);
+            
+            if(bricks[index]){
+              colRect(BRICK_W*iC,BRICK_H*iR, BRICK_W-GAP,BRICK_H-GAP, '#8b4513');
+            } else{
+              colRect(BRICK_W*iC,BRICK_H*iR, BRICK_W-GAP,BRICK_H-GAP, 'beige')
+            }
+            
+            
+          }//end of for each column
+        }//end of for each row
+      }//end of drawBricks
+      
+      function draw() {
+        //background
+        colRect(0,0, canvas.width, canvas.height, 'lightgrey');
+        
+        drawBricks();
+      }
+      
+      function colRect(tLX,tLY,rectWidth,rectHeight, color){
+        ctx.fillStyle = color;
+        ctx.fillRect(tLX,tLY, rectWidth,rectHeight);
+      }
+    </script>
+  </body>
 </html>
