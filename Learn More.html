@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <meta charset="utf-8"/>
+        <link href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/shift.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+        <title>Learn More</title>
+        <style>
+            body {
+                background-color: #c1c1ff;
+            }
+            #sort {
+                padding-top: 22px;
+            }
+            .nav a {
+            	text-transform: uppercase;
+            	color: white;
+                font-size: 15px;
+                font-weight: bold;
+                padding: 14px 15px;
+            	text-decoration: none;
+            	display: inline;
+            }
+            .nav li {
+                display: inline;
+            	text-transform: uppercase;
+            	color: white;
+                font-size: 15px;
+                font-weight: bold;
+                padding: 14px 15px;
+            	text-decoration: none;
+            }
+            .nav {
+                color: #5a5a5a;
+                background-color: #006400;
+                display: block;
+                padding: 8px;
+                font-weight: bold;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .nav a:hover {
+                background-color: white;
+                color: black;
+            }
+            .jumbotron {
+                background: url("http://www.publicdomainpictures.net/pictures/30000/nahled/smarties-background.jpg");
+            	color: white;
+            	background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+            .jumbotron p {
+                text-decoration: none;
+            }
+            #info {
+                text-align: left;
+                padding: 50px;
+                text-decoration: none;
+                color: black;
+            }
+            #info ul a {
+                color: black;
+            }
+            /*to make particle vibrate*/
+            #particle img:hover {
+              animation: shake 1s cubic-bezier(.36,.07,.19,.97) both;
+              transform: translate3d(0, 0, 0);
+              backface-visibility: hidden;
+              perspective: 1000px;
+            }
+            #particle img {
+                text-align: center;
+            }
+            @keyframes shake {
+              5%, 95% {
+                  transform: translate3d(0, 0.5px, 0);
+              }    
+              10%, 90% {
+                transform: translate3d(1px, 0, 0);
+              }
+              15%, 85% {
+                  transform: translate3d(0, -1.5px, 0);
+              }
+              20%, 80% {
+                transform: translate3d(-2px, 0, 0);
+              }
+              25%, 75% {
+                  transform: translate3d(0, 2.5px, 0);
+              }
+              30%, 70% {
+                transform: translate3d(3px, 0, 0);
+              }
+              35%, 65% {
+                  transform: translate3d(0, -3.5px, 0);
+              }
+              40%, 60% {
+                transform: translate3d(-4px, 0, 0);
+              }
+              45%, 55% {
+                  transform: translate3d(0, 4.5px, 0);
+              }
+              50%{
+                  transform: translate3d(5px, 0, 0);
+              }
+            }
+            /*button*/
+            .dropbtn {
+                text-transform: uppercase;
+                color: white;
+                font-size: 17px;
+                border: none;
+                cursor: pointer;
+                background-color: #006400;
+                padding: 12px;
+            }
+            .dropbtn:hover, .dropbtn:focus {
+                background-color: white;
+                color: black;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #006400;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            }
+            .dropdown-content a {
+                color: white;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {background-color: white; color: black;}
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="nav">
+            <div class="container">
+                <ul class="pull-left">
+                    <li><a href="physics.html">Home</a></li>
+                    <li><a href="overview.html">Overview</a></li>
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            Particles
+                        </button>
+                        <div class="dropdown-content">
+							<li><a href="quarks.html">Quarks</a></li>
+							<li><a href="leptons.html">Leptons</a></li>
+							<li><a href="bosons.html">Bosons</a></li>
+					    </div>
+    				</div>
+                </ul>
+                <ul class="pull-right" id="sort">
+                    <li><a href="Learn%20More.html">Learn More</a></li>
+                    <li><a href="Contact%20Us.html">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    <br><br><br><br>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Learn More</h1>
+            <h4>The author holds no responsiblity for external links and content</h4>
+            
+        </div>
+    </div>
+        <div id="info">
+			<div class="container">
+				<p>I have looked at many websites and books to find the infomation on this site. I can recommend a few sources: 
+				<ul>
+					<li>Youtube: '<a href="https://www.youtube.com/channel/UC7DdEm33SyaTDtWYGO2CwdA">Physics Girl</a>',
+					'<a href="https://www.youtube.com/channel/UCHnyfMqiRRG1u-2MsSQLbXA">Veritasium</a>', '<a href="https://www.youtube.com/channel/UCp28f3HAWKzUT0_7_DMMeXw">ATLAS Experiment</a>',
+					'<a href="https://www.youtube.com/channel/UCD5B6VoXv41fJ-IW8Wrhz9A">Fermilab</a>',
+					'<a href="https://www.youtube.com/channel/UCrHXK2A9JtiexqwHuWGeSMg">CERN</a>',
+					'<a href="https://www.youtube.com/channel/UCUHW94eEFW7hkUMVaZz4eDg">MinutePhysics</a>', and certain <a href="http://www.ted.com">TED</a> Talks.</li>
+					<li>Internet: 
+						<ul>
+							<li><a href="https://en.wikipedia.org/wiki/Standard_Model">Wikipedia</a> has some good facts such as mass, charge, spin etc.</li>
+							<li><a href="http://www.particleadventure.org/">The Particle Adventure</a> is a brilliant source for all things subatomic. There is also a great app for both Apple and Android.</li>
+							<li><a href="http://www.physicsworld.com">Physics World</a> is a bank of infomation for every part of physics, not just particle physics.</li>
+						</ul>
+					</li>
+					<li>There are hundreds of great books out there, I have found Frank Close's 'A Very Short Introduction to Particle Physics' very helpful indeed.</li>
+					<li>If you want to go beyond the area of the Standard Model and into the realm of theoretical physics, there are hundreds of great books - I recommend Michio Kaku - and a website that tells you all about it can be found <a href="http://www.staff.science.uu.nl/~gadda001/goodtheorist/">here</a>.
+				</ul>
+				I hope you find these helpful. I certainly did!</p>
+				<center>
+					<iframe width="420" height="315"
+						src="http://www.youtube.com/embed/LraNu_78sCw?autoplay=0">
+						<caption>A useful video to start, from Physics Girl</caption>
+					</iframe>
+				</center>
+			</div>
+        </div>
+    </body>
+</html>

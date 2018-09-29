@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <link href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/shift.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+		<!--<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">-->
+        <meta charset="utf-8"/>
+		<link rel="stylesheet" href="main.css">
+        <title>The Standard Model</title>
+		<!--these styles are specific for this page so embedded for easier access-->
+        <style>
+            #exp {
+                font-size: 15;
+                font-family: Tahoma, sans-serif;
+            }
+            #a {
+                font-size: 15;
+                font-family: Georgia, serif;
+            }
+			.jumbotron {
+				background: url("particles_names_background.png");
+				background-attachment: fixed;
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+		</style>
+    </head>
+	<body>
+		<!-- nav bar -->
+		<div class="nav">
+			<div class="container">
+				<ul class="pull-left"> <!--left side of nav menu -->
+					<li><a href="physics.html">Home</a></li>
+					<li><a href="overview.html">Overview</a></li>
+					<div class="dropdown"> <!-- dropdown menu -->
+						<button class="dropbtn">
+							Particles
+						</button>
+						<!-- items inside dropdown menu -->
+						<div class="dropdown-content">
+							<li><a href="quarks.html">Quarks</a></li>
+							<li><a href="leptons.html">Leptons</a></li>
+							<li><a href="bosons.html">Bosons</a></li>
+						</div>
+					</div>
+				</ul>
+				<!-- end of dropdown and of left side -->
+				<!-- right side of nav bar -->
+				<ul class="pull-right" id="sort">
+					<li><a href="Learn%20More.html">Learn More</a></li>
+					<li><a href="Contact%20Us.html">Contact Us</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- end of nav bar -->
+		<br><br><br><!-- these are here because the nav bar stays at the top, so part of the jumbotron would be hidden -->
+		<div class="jumbotron"><!-- main jumbotron title area -->
+			<div class="container">
+				<br>
+				<h1>The Standard Model</h1>
+				<h2>A short guide by Ben Fuller</h2>
+				<br>
+			</div>
+		</div><br><!-- end of jumbotron -->
+		<div class="learn-more"><!-- container for text underneath -->
+			<div class="container">
+				<div id="exp">
+					<p>This website aims to give you a brief explanation of the particles in the Standard Model of Particle Physics, an understanding of how these particles are discovered, and also featuring a special article on the Higgs Boson and Field.</p>
+					</div>
+				<p>Please note the author is not in any way professional, or educated in these matters - he has done simple research on the internet and in various books and this website is a collection of some of his findings.</p>
+				<div id="a"><!-- this area is specified so that it has a different font-family -->
+					<p>So what are you waiting for? Get started by clicking on 'Overview' at the top of the page.</p>
+				</div>
+				<br>
+				<div id="particle"><!-- particle - vibrates when you hover over it !!! -->
+					<center>
+						<img src="particlea.png"/>
+					</center>
+				</div><!-- end of particle -->		
+			</div>
+		</div><!-- end of learn-more container -->
+    </body>
+</html>
