@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Element Test</title>
+</head>
+<body>
+	<h1>Elements Test</h1>
+	
+<script>
+
+	window.onload = function() {
+
+
+var elements = [ "hydrogen", "helium", "lithium", "beryllium", "boron", "carbon", "nitrogen", "oxygen", "fluorine", "neon", "sodium", "magnesium", "aluminium", "silicon", "phosphorus", "sulphur", "chlorine", "argon", "potassium", "calcium", "scandium", "titanium", "vanadium", "chromium", "manganese", "iron", "cobalt", "nickel", "copper", "zinc", "gallium", "germanium", "arsenic", "selenium", "bromine", "krypton", "rubidium", "strontium", "yttrium", "zirconium", "niobium", "molybdenum", "technetium", "ruthenium", "rhodium", "palladium", "silver", "cadmium", "indium", "tin", "antimony", "tellurium", "iodine", "xenon", "caesium", "barium", "lanthanum", "cerium", "praeseodymium", "neodymium", "promethium", "samarium", "europium", "gadolinium", "terbium", "dysprosium", "holmium", "erbium", "thulium", "ytterbium", "lutetium", "hafnium", "tantalum", "tungsten", "rhenium", "osmium", "iridium", "platinum", "gold", "mercury", "thallium", "lead", "bismuth", "polonium", "astatine", "radon", "francium", "radium", "actinium", "thorium", "protactinium", "uranium", "neptunium", "plutonium", "americium", "curium", "berkelium", "californium", "eisteinium", "fermium", "mendelevium", "nobelium", "lawrencium", "rutherfordium", "dubnium", "seaborgium", "bohrium", "hassium", "meitnerium", "darmstadtium", "roentgenium", "copernicium", "nihonium", "flerovium", "moscovium", "livermorium", "tennessine", "oganesson" ];
+		
+var c = 0;
+var guess = "";
+
+		function checkNumber(number) {
+			return number == guess;
+		}	
+
+/*var guessNumber =*/ function checkAtomicNumber() {
+	elements.findIndex(checkNumber());
+}
+		
+while (c < 5) {
+var question = Math.floor(Math.random() * 119);
+guess = prompt("What is the full name of element " + question + "?").toLowerCase();
+if (elements[question - 1] === guess) {
+	alert("Correct!");
+} else {
+	alert("Incorrect! It was " + elements[question - 1] + "."); //+ guess + " is element number " + checkAtomicNumber);
+}
+alert(checkAtomicNumber());
+c++;
+}
+
+}
+
+</script>
+</body>
+</html>
