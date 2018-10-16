@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Eco-anarchism</title>
+    <style>
+      body{
+        font-family: Tahoma;
+        background-image: url('colored-bckgrnd.png');
+      }  
+      .header{
+        background: url('lakes-view-pines-fir.jpg') center fixed;
+        background-size: cover;
+        position: ;
+        height: 1000px;
+        
+        /*padding: 500px;*/
+      }
+      .info {
+        padding: 10px;
+      }  
+      .info-header {
+        background-color: red;
+        padding:50px;
+      }
+      .info-text {
+        padding: 10px;
+        background-color: beige;
+      }  
+      .nav li {
+        text-decoration: none;
+        text-transform: uppercase;
+        display: inline;
+        padding: 20px;
+      }
+      .nav a{
+        text-decoration:none;
+        color: saddlebrown;
+      }
+      .nav{
+        padding:10px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class='header'>
+      <div class='nav' id='top'>
+      <ul>
+        <li id='nt1h'><a href='#nt1'>The Problem</a></li>
+        <li id='nt2h'><a href='#nt2'>The Cause of The Problem</a></li>
+        <li id='nt3h'><a href='#nt3'>The Solution to The Problem</a></li>
+        <li id='nt4h'><a href='#nt4'>The Path that leads to The Solution of The Problem</a></li>
+      </ul>
+    </div>
+      <br><br><br><br><br><br><br><br><br><br><br><br>
+      <center>
+        <h1>The world is dying.</h1>
+      </center>
+    </div>
+    <div id='nt1' class='info'>
+      <div class='info-header'>
+        <h2>The Problem</h2>
+      </div>
+      <div class='info-text'>
+        <h4>Environment</h4>
+        <p>blah blah blah</p>
+      </div>
+    </div>
+    <div id='nt2' class='info'>
+      <div class='info-header'>
+        <h2>The Cause of the Problem</h2>
+      </div>
+      <div class='info-text'>
+        <h4>People</h4>
+        <p>blah blah blah<p>
+        <form name='popClock'>
+          "Human population: "
+          <input name='pop' type='text' size='14'>
+        </form>
+        <script>
+          function popClock(){
+            var t1 = new Date(95,7,1,0,0,0), t2 = new Date();
+            var exp = (t2-t1)/365/24/3600/1000;
+            var p = Math.floor(5733687096*Math.pow(1.01202,exp))+"";
+            var pc = "", len = p.length;
+            for(i = len-1; i >= 0; i--){
+              pc += p.charAt(len-1-i);
+              if(i&&!(i%3))pc+=",";
+            }
+            document.popClock.pop.value=pc;
+          }
+          setInterval(popClock,100);
+        </script>
+		
+      </div>
+    </div>
+    <div id='nt3' class='info'>
+      <div class='info-header'>
+        <h2>The Solution to The Problem</h2>
+      </div>
+      <div class='info-text'>
+        <h4>Death</h4>
+        <p>Really, it's ok.</p>
+      </div>
+    </div>
+    <div id='nt4' class='info'>
+      <div class='info-header'>
+        <h2>The Path that leads to The Solution of The Problem</h2>
+      </div>
+      <div class='info-text'>
+        <h4>y</h4>
+        <p><a href='http://www.vhemt.org/' target='_blank'>www.vhemt.org</a></p>
+      </div>
+    </div>
+    <div id='bottom'>
+      <a href='#top'>Go to top</a>
+    </div>
+  </body>
+</html>
