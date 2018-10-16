@@ -32,11 +32,7 @@
         
         brickReset();
         doAll();
-        //var fps = 2;
-        //setInterval(doAll, 1000/fps);
-        
-        
-        //to move paddle
+
         canvas.addEventListener('mousemove', updateMPos);
       }
       
@@ -54,13 +50,6 @@
         var root = document.documentElement;
         mouseX = evt.clientX - rect.left - root.scrollLeft;
         mouseY = evt.clientY - rect.top - root.scrollTop;
-        //paddleX = mouseX-PADDLE_W/2;
-        
-        /*//cheat
-        bX = mouseX;
-        bY = mouseY;
-        bSX = 2;
-        bSY = -2;*/
       }
       
       function clearCanvas(){
@@ -129,51 +118,7 @@
           bricks[i] = nextBricks[i];
         }
       }
-      
-      //Ball-brick collision algorithm
-      /*function bBrCollision(){
-        var ballBrX = Math.floor(bX/BRICK_W);
-        var ballBrY = Math.floor(bY/BRICK_H);
-        var brBIndex = findIndex(ballBrX,ballBrY);
         
-        if(ballBrX >= 0 &&
-          ballBrX < BRICK_Cs &&
-          ballBrY >= 0 &&
-          ballBrY <  BRICK_Rs){
-            
-          if(isBrThere(ballBrX, ballBrY)){
-            bricks[brBIndex] = false;
-            remainingBr--;
-            
-            var prevBX = bX-bSX;
-            var prevBY = bY-bSY;
-            var prevBrC = Math.floor(prevBX / BRICK_W);
-            var prevBrR = Math.floor(prevBY / BRICK_H);
-            
-            var cFD = true;
-            
-            if (prevBrC!=ballBrX){
-              if(isBrThere(prevBrC, ballBrY)==false){
-                bSX*=-1;
-                cFD = false;
-              }
-            }
-            if (prevBrR!=ballBrY){
-              if(isBrThere(ballBrX, prevBrR)==false){
-                bSY*=-1;
-                cFD = false;
-              }
-            }
-            if(cFD){
-              bSX*=-1;
-              bSY*=-1;
-            }
-            
-          }// end of brick found
-          
-        }// end of valid brick
-      }// end of bBrCollision*/
-      
       function getMousePos(evt){
         var rect = canvas.getBoundingClientRect();
         return {
