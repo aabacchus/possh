@@ -216,7 +216,10 @@
       window.onload = function(){
 	var musicAllowed = confirm("Select 'OK' to accept the playing of music on this webpage, or select 'Cancel' to disable it.");
         if(musicAllowed) document.getElementById('chac').play();
-	if(musicAllowed||!musicAllowed) var context = new AudioContext();
+	if(musicAllowed||!musicAllowed){
+		var context = new AudioContext();
+		var opi = context.createOscillator();
+	}
       }
       
       function dopause(aud, butt) {
@@ -265,7 +268,6 @@
       document.getElementById('dhmo').style.visibility = 'hidden';
       
 
-	var opi = context.createOscillator();
 	    
       function staro(frequency){
         opi.type = 'sine';
