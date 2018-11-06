@@ -213,12 +213,12 @@
     <!--- HELLO -->
     
     <script>
+	    var context;
       window.onload = function(){
-	var musicAllowed = confirm("Select 'OK' to accept the playing of music on this webpage, or select 'Cancel' to disable it.");
-        if(musicAllowed) document.getElementById('chac').play();
-	if(musicAllowed||!musicAllowed){
-		var context = new AudioContext();
-	}
+	document.addEventListener("mousedown", function(){
+		document.getElementById('chac').play();
+	})
+	context = new AudioContext();
       }
       
       function dopause(aud, butt) {
@@ -227,9 +227,6 @@
       }  
       
       function doplay(aud, butt, txt) {
-	if(!musicAllowed){
-		return;
-	}
         aud.play();
         butt.style.visibility = 'visible';
         document.getElementById(txt).style.visibility = 'visible';
