@@ -214,10 +214,10 @@
     
     <script>
       window.onload = function(){
-				var context = new AudioContext();
-	  		var opi = context.createOscillator();
-				var musicAllowed = confirm("Select 'OK' to accept the playing of music on this webpage, or select 'Cancel' to disable it.");
+	var musicAllowed = confirm("Select 'OK' to accept the playing of music on this webpage, or select 'Cancel' to disable it.");
         if(musicAllowed) document.getElementById('chac').play();
+	var context = new AudioContext();
+	var opi = context.createOscillator();
       }
       
       function dopause(aud, butt) {
