@@ -215,12 +215,13 @@
     <script>
 	    var context;
       window.onload = function(){
-	document.addEventListener("mousedown", function(){
-		document.getElementById('chac').play();
-	})
+	document.addEventListener("mousedown", openingMusic);
 	context = new AudioContext();
       }
-      
+      function openingMusic(evt){
+	      document.getElementById('chac').play();
+	      removeEventListener("mousedown",openingMusic);
+      }
       function dopause(aud, butt) {
         aud.pause();
         butt.style.visibility = 'hidden';
