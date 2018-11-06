@@ -218,7 +218,6 @@
         if(musicAllowed) document.getElementById('chac').play();
 	if(musicAllowed||!musicAllowed){
 		var context = new AudioContext();
-		var opi = context.createOscillator();
 	}
       }
       
@@ -228,9 +227,9 @@
       }  
       
       function doplay(aud, butt, txt) {
-				if(!musicAllowed){
-					return;
-				}
+	if(!musicAllowed){
+		return;
+	}
         aud.play();
         butt.style.visibility = 'visible';
         document.getElementById(txt).style.visibility = 'visible';
@@ -270,6 +269,8 @@
 
 	    
       function staro(frequency){
+	context.resume();
+	var opi = context.createOscillator();
         opi.type = 'sine';
         opi.frequency.value = frequency;        
         opi.connect(context.destination);
