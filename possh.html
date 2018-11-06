@@ -220,7 +220,8 @@
       }
       function openingMusic(evt){
 	      document.getElementById('chac').play();
-	      removeEventListener("mousedown",openingMusic);
+	      console.log("Thank you for clicking. Clicking is an inherently good and useful thing to do, so much so that you should go and tell others to click. It is better thus.");
+	      document.removeEventListener("mousedown",openingMusic);
       }
       function dopause(aud, butt) {
         aud.pause();
