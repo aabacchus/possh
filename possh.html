@@ -221,6 +221,7 @@
       }
       function openingMusic(evt){
 	      document.getElementById('chac').play();
+	      context.resume();
 	      console.log("Thank you for clicking. Clicking is an inherently good and useful thing to do, so much so that you should go and tell others to click. It is better thus.");
 	      document.removeEventListener("mousedown",openingMusic);
       }
@@ -269,7 +270,6 @@
 
 	    
       function staro(frequency){
-	context.resume();
         opi.type = 'sine';
         opi.frequency.value = frequency;        
         opi.connect(context.destination);
