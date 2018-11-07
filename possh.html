@@ -213,10 +213,11 @@
     <!--- HELLO -->
     
     <script>
-	    var context;
+    var context, opi;
       window.onload = function(){
 	document.addEventListener("mousedown", openingMusic);
 	context = new AudioContext();
+	opi = context.createOscillator();
       }
       function openingMusic(evt){
 	      document.getElementById('chac').play();
@@ -269,7 +270,6 @@
 	    
       function staro(frequency){
 	context.resume();
-	var opi = context.createOscillator();
         opi.type = 'sine';
         opi.frequency.value = frequency;        
         opi.connect(context.destination);
