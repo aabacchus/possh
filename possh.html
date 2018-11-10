@@ -160,7 +160,7 @@
           </td>
           <td>
             <center><img src='media/water.png' onclick='doplay(fin, finpause, "dhmo")' onclick='dhmoshow()' width=500px></center>
-            <button id='finpause' type='button' onclick='dopause(fin, finpause);f();' class='button'>Pause</button>
+            <button id='finpause' type='button' onclick='dopause(fin, finpause);/*f();*/' class='button'>Pause</button>
             <audio id='fin'>
               <!--<source src='media/finlandia.mp3' type='audio/mpeg'>-->
             </audio>
@@ -279,7 +279,7 @@
       document.getElementById('dhmo').style.visibility = 'hidden';
       var fi=0;
       var ng = false;
-	function f(){
+	/*function f(){
 		fi++;
 		if(fi>=){
 		   if(ng){
@@ -289,7 +289,7 @@
 		   getElementById('hk').addEventListener('click',function(){
 		   });
 		}
-	}
+	}*/
 
       function staro(frequency){
         opi.type = 'sine';
