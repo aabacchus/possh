@@ -231,7 +231,7 @@
 	opi = context.createOscillator();
       }
       function openingMusic(evt){
-	      document.getElementById('chac').play();
+	      el('chac').play();
 	      context.resume();
 	      console.log("Thank you for clicking. Clicking is an inherently good and useful thing to do, so much so that you should go and tell others to click. It is better thus.");
 	      document.removeEventListener("mousedown",openingMusic);
@@ -244,49 +244,52 @@
       function doplay(aud, butt, txt) {
         aud.play();
         butt.style.visibility = 'visible';
-        document.getElementById(txt).style.visibility = 'visible';
+        el(txt).style.visibility = 'visible';
       }  
       
-      var bal = document.getElementById('bal');
-      var balpause = document.getElementById('balpause');
+      var bal = el('bal');
+      var balpause = el('balpause');
       balpause.style.visibility = 'hidden';
       bal.controls = false;
       
-      var fant = document.getElementById('fant');
-      var fantpause = document.getElementById('fantpause');
+      var fant = el('fant');
+      var fantpause = el('fantpause');
       fantpause.style.visibility = 'hidden';
       fant.controls = false; 
       
-      var ussr = document.getElementById('ussr');
-      var ussrpause = document.getElementById('ussrpause');
+      var ussr = el('ussr');
+      var ussrpause = el('ussrpause');
       ussrpause.style.visibility = 'hidden';
       ussr.controls = false;
       
-      var march = document.getElementById('march');
-      var marpause = document.getElementById('marpause');
+      var march = el('march');
+      var marpause = el('marpause');
       marpause.style.visibility = 'hidden';
       
-      var e812 = document.getElementById('e812');
-      var e812pause = document.getElementById('e812pause');
+      var e812 = el('e812');
+      var e812pause = el('e812pause');
       e812pause.style.visibility = 'hidden';
       e812.controls = false;
       
-      var fin = document.getElementById('fin');
-      var finpause = document.getElementById('finpause');
+      var fin = el('fin');
+      var finpause = el('finpause');
       finpause.style.visibility = 'hidden';
       fin.controls = false;
       
-      document.getElementById('dhmo').style.visibility = 'hidden';
+	function el(id){
+		return document.getElementById(id);
+	}	
+	    
+      el('dhmo').style.visibility = 'hidden';
       var fi=0;
       var ng = false;
 	/*function f(){
 		fi++;
-		if(fi>=){
-		   if(ng){
-			fi = 0;
-			return;
-		   }
+		if(fi>=Math.floor(Math.PI*(14%3))){
+		   if(ng){fi = 0;ng = false;return;}
+		   ng = true;
 		   getElementById('hk').addEventListener('click',function(){
+		   	
 		   });
 		}
 	}*/
