@@ -231,7 +231,7 @@
 	opi = context.createOscillator();
       }
       function openingMusic(evt){
-	      el('chac').play();
+	      $('chac').play();
 	      context.resume();
 	      console.log("Thank you for clicking. Clicking is an inherently good and useful thing to do, so much so that you should go and tell others to click. It is better thus.");
 	      document.removeEventListener("mousedown",openingMusic);
@@ -244,43 +244,43 @@
       function doplay(aud, butt, txt) {
         aud.play();
         butt.style.visibility = 'visible';
-        el(txt).style.visibility = 'visible';
+        $(txt).style.visibility = 'visible';
       }  
       
-      var bal = el('bal');
-      var balpause = el('balpause');
+      var bal = $('bal');
+      var balpause = $('balpause');
       balpause.style.visibility = 'hidden';
       bal.controls = false;
       
-      var fant = el('fant');
-      var fantpause = el('fantpause');
+      var fant = $('fant');
+      var fantpause = $('fantpause');
       fantpause.style.visibility = 'hidden';
       fant.controls = false; 
       
-      var ussr = el('ussr');
-      var ussrpause = el('ussrpause');
+      var ussr = $('ussr');
+      var ussrpause = $('ussrpause');
       ussrpause.style.visibility = 'hidden';
       ussr.controls = false;
       
-      var march = el('march');
-      var marpause = el('marpause');
+      var march = $('march');
+      var marpause = $('marpause');
       marpause.style.visibility = 'hidden';
       
-      var e812 = el('e812');
-      var e812pause = el('e812pause');
+      var e812 = $('e812');
+      var e812pause = $('e812pause');
       e812pause.style.visibility = 'hidden';
       e812.controls = false;
       
-      var fin = el('fin');
-      var finpause = el('finpause');
+      var fin = $('fin');
+      var finpause = $('finpause');
       finpause.style.visibility = 'hidden';
       fin.controls = false;
       
-	function el(id){
+	function $(id){
 		return document.getElementById(id);
 	}	
 	    
-      el('dhmo').style.visibility = 'hidden';
+      $('dhmo').style.visibility = 'hidden';
       var fi=0;
       var ng = false;
 	/*function f(){
