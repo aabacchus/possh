@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<style type='text/css'>
+		</style>
+	</head>
+	<body>
+		<canvas id='c' width='800' height='600'>Error</canvas>
+		<button onclick='clearInterval(interval);'>Stop</button>
+		<script>
+			var c = document.getElementById('c');
+			var ctx = c.getContext("2d");
+
+			var Particle = function (m, type){
+				this.x = Math.floor(Math.random()*c.width);
+				this.y = Math.floor(Math.random()*c.height);
+				this.v = {
+					x: Math.floor(Math.random()*4)-2,
+					y: Math.floor(Math.random()*4)-2
+				};
+				this.rad= 10;
+				this.m = m;
+				switch(type){
+					case 0:
+						this.color = 'red';
+						break;
+					case 1:
+						this.color = 'blue';
+						break;
+					default:
+						this.color = 'saddlebrown';
+						break;
+				}
+			}
+			
+			var numParticles = 200;
+			var particles = new Array(numParticles);
+			
+			for(var i=0;i<numParticles;i++){
+				particles[i] = new Particle(1, (i<3 ? i : undefined));
+			}
+
+			var fps = 20, interval;
+			window.onload = function() {
+				interval = setInterval(doAll, 1000/fps);
+			}
+
+			function doAll(){
+				move();
+				draw();
+			}
+			function move(){
+				for(var i=0;i<numParticles;i++){
+					var p = particles[i];
+					p.x+=p.v.x;
+					p.y+=p.v.y;
+					wallCollision(p);
+					bounce(p);
+				}
+			}
+			function bounce(p){
+				for(var j=0;j<numParticles;j++){
+					var q = particles[j];
+					if(p==q) continue;
+					var r = ((p.x-q.x)**2+(p.y-q.y)**2)**0.5;
+					if(r>p.rad+q.rad) continue;
+					//if(r<p.rad+q.rad-2) continue;
+					if(r<p.rad+q.rad){
+						if(areOpposite(p.v.x,q.v.x) && areOpposite(p.v.y,q.v.y)){
+							continue;
+						}
+					}
+					var pux = p.v.x;
+					var puy = p.v.y;
+					p.v.x = pux*((p.m-q.m)/(p.m+q.m))+(2*q.v.x*q.m/(p.m+q.m));
+					q.v.x = q.v.x + (p.m/q.m)*(pux-p.v.x);
+					
+					p.v.y = puy*((p.m-q.m)/(p.m+q.m))+(2*q.v.y*q.m/(p.m+q.m));
+					q.v.y = q.v.y + (p.m/q.m)*(puy-p.v.y);
+				}
+			}
+			function areOpposite(a,b){
+				if(Math.abs(a)/a == -1* Math.abs(b)/b){
+					return true;
+				} else {
+					return false;
+				}
+			}
+			function wallCollision(p){
+				if(p.x>c.width-p.rad){
+					p.v.x*=-1;
+					p.x=c.width-p.rad;
+				} else if(p.x<p.rad){
+					p.v.x*=-1;
+					p.x=p.rad;
+				}
+				if(p.y<p.rad){
+					p.v.y*=-1;
+					p.y=p.rad;
+				} else if(p.y>c.height-p.rad){
+					p.v.y*=-1;
+					p.y=c.height-p.rad;
+				}
+			}
+
+			function draw(){
+				drawRect(0,0,c.width,c.height,'beige');
+				for(var i=0;i<numParticles;i++){
+					var p = particles[i];	
+					drawCirc(p.x,p.y,p.rad,p.color);
+				}
+			}
+			function drawRect(x,y,w,h,color){
+				ctx.fillStyle = color;
+				ctx.fillRect(x,y,w,h);
+			}
+			function drawCirc(x,y,rad,color){
+				ctx.fillStyle = color;
+				ctx.beginPath();
+				ctx.arc(x,y,rad,0,Math.PI*2,true);
+				ctx.fill();
+			}
+		</script>
+	</body>
+</html>
