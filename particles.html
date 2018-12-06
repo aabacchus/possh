@@ -1,32 +1,49 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset='utf-8'>
 		<style type='text/css'>
+		.slidecontainer {
+		  width: 100%;
+		}
 		</style>
 	</head>
 	<body>
-		<canvas id='c' width='800' height='600'>Error</canvas>
+		<canvas id='c' width='800' height='600'>Error: canvas not supported by browser</canvas>
 		<button onclick='clearInterval(interval);'>Stop</button>
+		<div class='slidecontainer'>
+		  G: <input type='number' max='10' min='0' step='0.2' value='1' id='gShow'><input type='range' min='0' max='10' step='0.2' value='1' class='slider' id='g'>
+		  <br>Number of particles: <input type='number' max='1000' min='2' value='100' step='1' id='numPartsShow'><input type='range' min='2' max='1000' value='100' step='1' class='slider' id='numParts'>
+		</div>
 		<script>
 			var c = document.getElementById('c');
 			var ctx = c.getContext("2d");
-
+      var gSlider = document.getElementById('g');
+      var g = gSlider.value;
+      var gShow = document.getElementById('gShow');
+      var numParts = document.getElementById('numParts');
+      var numParticles = numParts.value;
+      var numPartsShow = document.getElementById('numPartsShow');
+      
 			var Particle = function (m, type){
 				this.x = Math.floor(Math.random()*c.width);
 				this.y = Math.floor(Math.random()*c.height);
 				this.v = {
-					x: Math.floor(Math.random()*4)-2,
-					y: Math.floor(Math.random()*4)-2
+					x: Math.floor(Math.random()*2)-1,
+					y: Math.floor(Math.random()*2)-1
 				};
-				this.rad= 10;
+				this.rad= 1;
 				this.m = m;
 				switch(type){
 					case 0:
 						this.color = 'red';
+						this.rad = 3;
+						this.m = 20*m;
 						break;
 					case 1:
 						this.color = 'blue';
+						this.rad = 3;
 						break;
 					default:
 						this.color = 'saddlebrown';
@@ -34,30 +51,52 @@
 				}
 			}
 			
-			var numParticles = 200;
 			var particles = new Array(numParticles);
 			
 			for(var i=0;i<numParticles;i++){
-				particles[i] = new Particle(1, (i<3 ? i : undefined));
+				particles[i] = new Particle(0.1, (i<3 ? i : undefined));
 			}
-
+      
 			var fps = 20, interval;
 			window.onload = function() {
 				interval = setInterval(doAll, 1000/fps);
+				gSlider.oninput = function(){
+				  g = this.value;
+				  gShow.value = this.value;
+				}
+				numParts.oninput = function(){
+				  var nP = this.value;
+				  changeParticleNumberTo(nP);
+				  numPartsShow.value = this.value;
+				}
 			}
-
+      function changeParticleNumberTo(n){
+        if(n == numParticles) return;
+        if(n > numParticles){
+          for(var i = 0; i < n-numParticles; i++){
+            particles.push(new Particle(0.1));
+          }
+          numParticles = n;
+        } else if(n < numParticles){
+          clearInterval(interval);
+          particles = particles.slice(n-numParticles);
+          numParticles = n;
+          interval = setInterval(doAll, 1000/fps);
+        }
+      }
 			function doAll(){
-				move();
+				particles.forEach(move);
 				draw();
 			}
-			function move(){
-				for(var i=0;i<numParticles;i++){
-					var p = particles[i];
+			function move(p){
+				//for(var i=0;i<numParticles;i++){
+					//var p = particles[i];
+					p.v.y += g/fps;
 					p.x+=p.v.x;
 					p.y+=p.v.y;
 					wallCollision(p);
 					bounce(p);
-				}
+				
 			}
 			function bounce(p){
 				for(var j=0;j<numParticles;j++){
@@ -68,8 +107,9 @@
 					//if(r<p.rad+q.rad-2) continue;
 					if(r<p.rad+q.rad){
 						if(areOpposite(p.v.x,q.v.x) && areOpposite(p.v.y,q.v.y)){
-							continue;
+							//continue;
 						}
+						//if(r<p.rad+q.rad-2) continue;
 					}
 					var pux = p.v.x;
 					var puy = p.v.y;
@@ -107,7 +147,7 @@
 			function draw(){
 				drawRect(0,0,c.width,c.height,'beige');
 				for(var i=0;i<numParticles;i++){
-					var p = particles[i];	
+					var p = particles[i];
 					drawCirc(p.x,p.y,p.rad,p.color);
 				}
 			}
