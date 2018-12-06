@@ -48,10 +48,6 @@
 						this.color = 'blue';
 						this.rad = 3;
 						break;
-					case 'dust':
-						this.color = 'grey';
-						this.rad = 50;
-						break;
 					default:
 						this.color = 'saddlebrown';
 						break;
@@ -63,8 +59,7 @@
 			for(var i=0;i<numParticles;i++){
 				particles[i] = new Particle(0.1, (i<3 ? i : undefined));
 			}
-      			particles.push(new Particle(10**19, 'dust'));
-			numParticles++;
+
 			var fps = 20, interval;
 			window.onload = function() {
 				interval = setInterval(doAll, 1000/fps);
