@@ -4,20 +4,31 @@
 	<head>
 		<meta charset='utf-8'>
 		<style type='text/css'>
-		canvas {
-			border: 1px solid black;
-		}
 		.slidecontainer {
 		  width: 100%;
+		}
+		.canvas {
+		  width: 100%;
+		  margin: auto;
+		  display: block;
+		  
+		}
+		.f {
+		  border: 1px solid black;
+		  border-bottom-color: blue;
+		  width: 80%;
+		  margin-left: 10px;
 		}
 		</style>
 	</head>
 	<body>
-		<canvas id='c' width='800' height='500'>Error: canvas not supported by browser</canvas>
+	  	<div class='f'>
+			<canvas id='c' width='600' height='400' class='canvas'>Error</canvas>
+		</div>
 		<button onclick='clearInterval(interval);'>Stop</button>
 		<div class='slidecontainer'>
-		  G: <input type='number' max='10' min='0' step='0.2' value='1' id='gShow'><input type='range' min='0' max='10' step='0.2' value='1' class='slider' id='g'>
-		  <br>Number of particles: <input type='number' max='1000' min='2' value='100' step='1' id='numPartsShow'><input type='range' min='2' max='1000' value='100' step='1' class='slider' id='numParts'>
+		  g: <input type='number' max='10' min='0' step='0.2' value='0' id='gShow'><input type='range' min='0' max='10' step='0.2' value='0' class='slider' id='g'>
+		  <br>Number of particles: <input type='number' max='1000' min='2' value='200' step='1' id='numPartsShow'><input type='range' min='2' max='1000' value='200' step='1' class='slider' id='numParts'>
 		</div>
 		<script>
 			var c = document.getElementById('c');
@@ -33,20 +44,19 @@
 				this.x = Math.floor(Math.random()*c.width);
 				this.y = Math.floor(Math.random()*c.height);
 				this.v = {
-					x: Math.floor(Math.random()*2)-1,
-					y: Math.floor(Math.random()*2)-1
+					x: (Math.random()-0.5)*18,
+					y: (Math.random()-0.5)*18
 				};
-				this.rad= 1;
-				this.m = m;//assume particles are N2, thrfr m == 28amu.
+				this.rad= 2;
+				this.m = m;
 				switch(type){
 					case 0:
 						this.color = 'red';
-						this.rad = 3;
-						this.m = 20*m;
+						this.m = 2*m;
+						this.rad+=5;
 						break;
 					case 1:
 						this.color = 'blue';
-						this.rad = 3;
 						break;
 					default:
 						this.color = 'saddlebrown';
@@ -59,7 +69,6 @@
 			for(var i=0;i<numParticles;i++){
 				particles[i] = new Particle(0.1, (i<3 ? i : undefined));
 			}
-
 			var fps = 20, interval;
 			window.onload = function() {
 				interval = setInterval(doAll, 1000/fps);
@@ -68,68 +77,63 @@
 				  gShow.value = this.value;
 				}
 				numParts.oninput = function(){
-				  var nP = this.value;
-				  changeParticleNumberTo(nP);
+				  changeParticleNumberTo(this.value);
 				  numPartsShow.value = this.value;
 				}
 			}
       function changeParticleNumberTo(n){
         if(n == numParticles) return;
+        clearInterval(interval);
         if(n > numParticles){
           for(var i = 0; i < n-numParticles; i++){
             particles.push(new Particle(0.1));
           }
           numParticles = n;
         } else if(n < numParticles){
-          clearInterval(interval);
           particles = particles.slice(n-numParticles);
           numParticles = n;
-          interval = setInterval(doAll, 1000/fps);
         }
+        interval = setInterval(doAll, 1000/fps);
       }
+      
 			function doAll(){
-				particles.forEach(move);
+				move();
 				draw();
 			}
-			function move(p){
-				//for(var i=0;i<numParticles;i++){
-					//var p = particles[i];
+			function move(){
+				for(var i=0;i<numParticles;i++){
+					var p = particles[i];
 					p.v.y += g/fps;
 					p.x+=p.v.x;
 					p.y+=p.v.y;
 					wallCollision(p);
-					bounce(p);
-				
+					bounce(p,i);
+				}
 			}
-			function bounce(p){
-				for(var j=0;j<numParticles;j++){
+			var r;
+			function bounce(p,n){
+				for(var j=n+1;j<numParticles;j++){
 					var q = particles[j];
-					if(p==q) continue;
-					var r = ((p.x-q.x)**2+(p.y-q.y)**2)**0.5;
+					//if(p==q) continue;
+					r = distanceBn(p.x,p.y,q.x,q.y);
 					if(r>p.rad+q.rad) continue;
-					//if(r<p.rad+q.rad-2) continue;
-					if(r<p.rad+q.rad){
-						if(areOpposite(p.v.x,q.v.x) && areOpposite(p.v.y,q.v.y)){
-							//continue;
-						}
-						//if(r<p.rad+q.rad-2) continue;
-					}
+					var prevR = distanceBn(p.x-p.v.x,p.y-p.v.y,q.x-q.v.x,q.y-q.v.y);
+					if(prevR<r) continue;
+					
 					var pux = p.v.x;
 					var puy = p.v.y;
-					p.v.x = pux*((p.m-q.m)/(p.m+q.m))+(2*q.v.x*q.m/(p.m+q.m));
+					p.v.x = pux*( (p.m-q.m) / (p.m+q.m) ) + (2*q.v.x*q.m/(p.m+q.m) );
 					q.v.x = q.v.x + (p.m/q.m)*(pux-p.v.x);
 					
 					p.v.y = puy*((p.m-q.m)/(p.m+q.m))+(2*q.v.y*q.m/(p.m+q.m));
 					q.v.y = q.v.y + (p.m/q.m)*(puy-p.v.y);
 				}
 			}
-			function areOpposite(a,b){
-				if(Math.abs(a)/a == -1* Math.abs(b)/b){
-					return true;
-				} else {
-					return false;
-				}
+			
+			function distanceBn(ax,ay,bx,by){
+			  return ((bx-ax)**2 + (by-ay)**2)**0.5;
 			}
+			
 			function wallCollision(p){
 				if(p.x>c.width-p.rad){
 					p.v.x*=-1;
@@ -142,7 +146,7 @@
 					p.v.y*=-1;
 					p.y=p.rad;
 				} else if(p.y>c.height-p.rad){
-					p.v.y*=-1;
+					p.v.y*=-0.9;
 					p.y=c.height-p.rad;
 				}
 			}
