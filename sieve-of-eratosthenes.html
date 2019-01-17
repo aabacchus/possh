@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <style>
+      .num{
+        width: 50px;
+      }
+      body {
+        background-color: beige;
+      }
+      pre{
+        white-space: pre-wrap;
+        color: rgb(36,204,68);
+        background-color: #111;
+        padding: 2px;
+        display: block;
+        max-width: 80%;
+        text-align: left;
+        font-size: 16px;
+      }
+    </style>
+    <title>Prime number calculator</title>
+  </head>
+  <body>
+    <h2>Prime number calculator</h2>
+    <p>Calculate all primes less than or equal to <input type='number' value='100' class='num' id='in'></p><button id='go'>Go!</button>
+    <div id='out'></div>
+    <script>
+      var inp = document.getElementById('in');
+      var out = document.getElementById('out');
+      var gob = document.getElementById('go');
+      
+      window.onload = function() {
+        gob.addEventListener('click', sieve);
+      }
+      function sieve(){
+        var t0 = performance.now();
+        var a = [];
+        var n = inp.value; // limit for the biggest prime.
+        if(n<1){ alert('Please enter a positive number');return;}
+        for(var t=0;t<=n;t++){
+          a[t] = true;
+        }
+        for(var i=2;i<=n;i++){
+          if(a[i]){
+            for(var m=i**2;m<=n;m+=i){
+              a[m] = false;
+            }
+          }
+        }
+        a[0]=false;
+        a[1]=false;
+        var t1 = performance.now();
+        var t = t1-t0;
+        console.log(t+'ms');
+        var primes = [];
+        for(var j=0;j<a.length;j++){
+          if(a[j]){
+            primes.push(j);
+          }
+        }
+        out.innerHTML = '<pre>'+primes.join(', ')+'</pre><br><p>Calculated in '+ t + ' ms.</p>';
+        var tB=performance.now();
+        console.log(tB-t0);
+      }
+    </script>
+  </body>
+</html>
