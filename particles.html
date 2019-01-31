@@ -38,7 +38,7 @@
 		<div class='slidecontainer'>
 		  g: <input type='number' max='10' min='0' step='0.2' value='0' id='gShow'><input type='range' min='0' max='10' step='0.2' value='0' class='slider' id='g'>
 		  <br>Number of particles: <input type='number' max='1000' min='2' value='200' step='1' id='numPartsShow'><input type='range' min='2' max='1000' value='200' step='1' class='slider' id='numParts'>
-            <br>Volume of container: <input type='range' min='0' max='200' value='100' step='1' class='slider' id='volSlider'>
+            <br>Volume of container: <input type='range' min='0' max='200' value='0' step='1' class='slider' id='volSlider'>
 		</div>
 		<script>
 			var c = document.getElementById('c');
@@ -51,7 +51,7 @@
       var numPartsShow = document.getElementById('numPartsShow');
       var keBox = document.getElementById('ke');
       var volSlider = document.getElementById('volSlider');
-            var slide = 100;
+            var slide = 0;
             volSlider.max = c.width-100;
             
 			var Particle = function (m, type){
