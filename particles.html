@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -18,16 +17,28 @@
 		  width: 70%;
 		  margin-left: 10px;
 		}
+            .info {
+                width: 30%
+                margin-right: 0;
+                border: 1px dashed black;
+            }
 		</style>
 	</head>
 	<body>
 	  	<div class='f'>
 			<canvas id='c' width='600' height='400' class='canvas'>Error</canvas>
 		</div>
-		<button onclick='clearInterval(interval);'>Stop</button>
+        		<button onclick='clearInterval(interval);'>Stop</button>
+        <br>
+        <br>
+        <div class='info'>
+            <p>Average KE: <input type=number id='ke'></p>
+        </div>
+        <br>
 		<div class='slidecontainer'>
 		  g: <input type='number' max='10' min='0' step='0.2' value='0' id='gShow'><input type='range' min='0' max='10' step='0.2' value='0' class='slider' id='g'>
 		  <br>Number of particles: <input type='number' max='1000' min='2' value='200' step='1' id='numPartsShow'><input type='range' min='2' max='1000' value='200' step='1' class='slider' id='numParts'>
+            <br>Volume of container: <input type='range' min='0' max='200' value='100' step='1' class='slider' id='volSlider'>
 		</div>
 		<script>
 			var c = document.getElementById('c');
@@ -38,7 +49,11 @@
       var numParts = document.getElementById('numParts');
       var numParticles = numParts.value;
       var numPartsShow = document.getElementById('numPartsShow');
-      
+      var keBox = document.getElementById('ke');
+      var volSlider = document.getElementById('volSlider');
+            var slide = 100;
+            volSlider.max = c.width-100;
+            
 			var Particle = function (m, type){
 				this.x = Math.floor(Math.random()*c.width);
 				this.y = Math.floor(Math.random()*c.height);
@@ -56,6 +71,7 @@
 						break;
 					case 1:
 						this.color = 'blue';
+                        this.rad += 1;
 						break;
 					default:
 						this.color = 'saddlebrown';
@@ -79,6 +95,10 @@
 				  changeParticleNumberTo(this.value);
 				  numPartsShow.value = this.value;
 				}
+                volSlider.oninput = function(){
+                    volSlider.max = c.width -100;
+                    slide = parseInt(this.value);
+                }
 			}
       function changeParticleNumberTo(n){
         if(n == numParticles) return;
@@ -98,7 +118,18 @@
 			function doAll(){
 				move();
 				draw();
+                calculate();
 			}
+            
+            function calculate(){
+                var ke = 0;
+                for(var i=0;i<numParticles;i++){
+                    ke += 0.5*(particles[i].v.x*particles[i].v.x + particles[i].v.y*particles[i].v.y)*particles[i].m;
+                }
+                ke /= numParticles;
+                keBox.value = ke;
+            }
+            
 			function move(){
 				for(var i=0;i<numParticles;i++){
 					var p = particles[i];
@@ -137,9 +168,9 @@
 				if(p.x>c.width-p.rad){
 					p.v.x*=-1;
 					p.x=c.width-p.rad;
-				} else if(p.x<p.rad){
+				} else if(p.x<p.rad+slide){
 					p.v.x*=-1;
-					p.x=p.rad;
+					p.x=p.rad+slide;
 				}
 				if(p.y<p.rad){
 					p.v.y*=-1;
@@ -152,6 +183,7 @@
 
 			function draw(){
 				drawRect(0,0,c.width,c.height,'beige');
+                drawRect(slide-1,0,1,c.height,'black');
 				for(var i=0;i<numParticles;i++){
 					var p = particles[i];
 					drawCirc(p.x,p.y,p.rad,p.color);
