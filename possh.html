@@ -98,7 +98,7 @@
     <h1>Death & Drugs</h1>
     
     <div class='right'>
-  	  <img src='media/anprimetc.gif' width=200px>
+  	  <img src='media/anprimetc.gif' width=15%>
     </div>
     
     <audio controls id='chac' style='display:none'>
@@ -107,7 +107,7 @@
     
     <br><br>
     
-    <center><abbr title="σεμνοτητ'εχει σκοτος"><a href="http://churchofeuthanasia.org/"><img src="http://churchofeuthanasia.org/graphics/ranstick.cgi" width=252 height=76 alt="The Church of Euthanasia"></a></abbr></center>
+    <center><abbr title="σεμνοτητ'εχει σκοτος"><a href="http://churchofeuthanasia.org/"><img src="http://churchofeuthanasia.org/graphics/ranstick.cgi" width=auto alt="The Church of Euthanasia"></a></abbr></center>
     
     <br><br>
     
@@ -204,7 +204,7 @@
 	<hr>
 	<br>
     <footer>
-      <table>
+      <table width=100%>
         <tr>
           <td>
             <div id='contact' class='container'>
@@ -228,6 +228,7 @@
     <!--- HELLO -->
     
     <script>
+	    // no, I'm not using jQuery
     var context, opi;
       window.onload = function(){
 	document.addEventListener("mousedown", openingMusic);
@@ -237,7 +238,7 @@
       function openingMusic(evt){
 	      $('chac').play();
 	      context.resume();
-	      console.log("Thank you for clicking. Clicking is an inherently good and useful thing to do, so much so that you should go and tell others to click. It is better thus.");
+	      console.log("Thank you for clicking. Clicking is an inherently good and useful thing to do, so much so that you should go and tell others to click. Cela vaut mieux ainsi.");
 	      document.removeEventListener("mousedown",openingMusic);
       }
       function dopause(aud, butt) {
