@@ -60,9 +60,10 @@
             primes.push(j);
           }
         }
-        out.innerHTML = '<pre>'+primes.join(', ')+'</pre><br><p>Calculated in '+ t + ' ms.</p>';
+        out.innerHTML = '<pre>'+primes.join(', ')+'</pre><br><p>Calculated '+primes.length+' primes in '+ t + ' ms.</p>';
         var tB=performance.now();
         console.log(tB-t0);
+
       }
     </script>
   </body>
