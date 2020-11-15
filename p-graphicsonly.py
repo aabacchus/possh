@@ -1,23 +1,24 @@
-import pygame
-import time
 import ast
+import time
+import pygame
 
 Width = 1280
 Height = 1060
 n=150
 
-f=open('positions.txt','r')
+f = open('positions.txt', 'r')
 posits = ast.literal_eval(f.read())
 f.close()
 
 def main():
+    '''main method'''
     pygame.init()
     screen=pygame.display.set_mode([Width,Height])
     clock=pygame.time.Clock()
 
     cntr=1
     t0 = time.time()
-    
+
     for i in range(len(posits)):
         screen.fill((0,0,0))
         for j in range(len(posits[i])):
