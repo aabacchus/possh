@@ -98,6 +98,8 @@ def main():
             if event.type == pygame.MOUSEWHEEL:
                 #print("scroll: ",event.y)
                 zoom += event.y/100
+                offsetX -= pygame.mouse.get_pos()[0]*event.y/100
+                offsetY -= pygame.mouse.get_pos()[1]*event.y/100
                 print("zoom: ",zoom)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
