@@ -62,6 +62,8 @@ def main():
 
     font = pygame.font.SysFont(None,24)
 
+    refreshing = True # whether or not to redraw the black background on each frame, toggleable by pressing 'r'
+
     cntr = 1
     done = False
     
@@ -105,10 +107,11 @@ def main():
                 #print("zoom: ",zoom)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    screen.fill((0,0,0))
+                    refreshing = !refreshing
         
         nI=0
-        #screen.fill((0,0,0))
+        if refreshing:
+            screen.fill((0,0,0))
         for ball in balls:
             ball.move()
             #if ball.m >= 1000:
