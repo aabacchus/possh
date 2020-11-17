@@ -5,7 +5,7 @@ import time
 
 Width = 800
 Height = 600
-n = 3
+n = 30
 dt = 0.1
 e=1
 cntr=1
@@ -14,7 +14,7 @@ zoom = 1
 
 class Particle():
     def __init__(self,is_a_planet):
-        self.rad = 10 if not is_a_planet else 2
+        self.rad = 20 if not is_a_planet else 5
         self.x=random.randrange(round(self.rad),Width-round(self.rad))
         self.y=random.randrange(round(self.rad),Height-round(self.rad))
         #self.m = 1#+random.random()
@@ -60,6 +60,8 @@ def main():
     pygame.display.set_caption("Particle simulation")
     clock = pygame.time.Clock()
 
+    font = pygame.font.SysFont(None,24)
+
     cntr = 1
     done = False
     
@@ -79,7 +81,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-                print("Quitting...")
+                #print("Quitting...")
                 pygame.quit()
                 return 1
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -100,7 +102,7 @@ def main():
                 zoom += event.y/100
                 offsetX -= pygame.mouse.get_pos()[0]*event.y/100
                 offsetY -= pygame.mouse.get_pos()[1]*event.y/100
-                print("zoom: ",zoom)
+                #print("zoom: ",zoom)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     screen.fill((0,0,0))
@@ -118,9 +120,14 @@ def main():
             if mouse_down:
                 offsetX = pygame.mouse.get_pos()[0]-mouse_start[0] + oldOffsetX
                 offsetY = pygame.mouse.get_pos()[1]-mouse_start[1] + oldOffsetY
-                print(offsetX,offsetY)
+                #print(offsetX,offsetY)
             pygame.draw.circle(screen,ball.color,[round(ball.x*zoom+offsetX),round(ball.y*zoom+offsetY)],round(ball.rad*zoom))
             pygame.draw.rect(screen,(255,255,255),pygame.Rect(offsetX,offsetY,Width*(zoom),Height*(zoom)),1)
+
+            ## logic for writing text on screen
+            text = "{:.3f}".format(zoom)
+            img = font.render(text,True,(0,0,255))
+            screen.blit(img,(20,20))
 
         clock.tick()
         pygame.display.flip()
