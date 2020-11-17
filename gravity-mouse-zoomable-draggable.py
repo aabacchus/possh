@@ -9,18 +9,18 @@ n = 3
 dt = 0.1
 e=1
 cntr=1
-asdf = 0
+is_a_planet = 0
 zoom = 1
 
 class Particle():
-    def __init__(self,asdf):
-        self.rad = 10 if not asdf else 2
+    def __init__(self,is_a_planet):
+        self.rad = 10 if not is_a_planet else 2
         self.x=random.randrange(round(self.rad),Width-round(self.rad))
         self.y=random.randrange(round(self.rad),Height-round(self.rad))
         #self.m = 1#+random.random()
-        self.m = 10**3 if not asdf else (10**1 if asdf == 2 else 1)
-        self.vx = 0 if not asdf else (random.random()-0.5)*7
-        self.vy = 0 if not asdf else (random.random()-0.5)*7
+        self.m = 10**3 if not is_a_planet else (10**1 if is_a_planet == 2 else 1)
+        self.vx = 0 if not is_a_planet else (random.random()-0.5)*7
+        self.vy = 0 if not is_a_planet else (random.random()-0.5)*7
         self.color = (255,255,255)
 
     def move(self,dt=0.1):
@@ -51,8 +51,8 @@ class Particle():
 
 balls = []
 for i in range(n):
-    balls.append(Particle(asdf))
-    asdf+=1
+    balls.append(Particle(is_a_planet))
+    is_a_planet+=1
 
 def main():
     pygame.init()
