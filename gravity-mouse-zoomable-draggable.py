@@ -107,7 +107,7 @@ def main():
                 #print("zoom: ",zoom)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    refreshing = !refreshing
+                    refreshing = not refreshing
         
         nI=0
         if refreshing:
