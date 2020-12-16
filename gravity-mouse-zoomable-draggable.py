@@ -5,7 +5,7 @@ import time
 
 Width = 800
 Height = 600
-n = 30
+n = 3
 dt = 0.1
 e=1
 cntr=1
@@ -18,10 +18,10 @@ class Particle():
         self.x=random.randrange(round(self.rad),Width-round(self.rad))
         self.y=random.randrange(round(self.rad),Height-round(self.rad))
         #self.m = 1#+random.random()
-        self.m = 10**3 if not is_a_planet else (10**1 if is_a_planet == 2 else 1)
+        self.m = 10**4 if not is_a_planet else (10**1 if is_a_planet == 1 else 1)
         self.vx = 0 if not is_a_planet else (random.random()-0.5)*7
         self.vy = 0 if not is_a_planet else (random.random()-0.5)*7
-        self.color = (255,255,255)
+        self.color = (255,255,255) if is_a_planet != 1 else (255,0,0)
 
     def move(self,dt=0.1):
         self.x += self.vx*dt
@@ -104,6 +104,7 @@ def main():
                 zoom += event.y/100
                 offsetX -= pygame.mouse.get_pos()[0]*event.y/100
                 offsetY -= pygame.mouse.get_pos()[1]*event.y/100
+                print("zooming at ",pygame.mouse.get_pos())
                 #print("zoom: ",zoom)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
@@ -124,7 +125,7 @@ def main():
                 offsetX = pygame.mouse.get_pos()[0]-mouse_start[0] + oldOffsetX
                 offsetY = pygame.mouse.get_pos()[1]-mouse_start[1] + oldOffsetY
                 #print(offsetX,offsetY)
-            pygame.draw.circle(screen,ball.color,[round(ball.x*zoom+offsetX),round(ball.y*zoom+offsetY)],round(ball.rad*zoom))
+            pygame.draw.circle(screen,ball.color,[round(ball.x*zoom+offsetX-balls[0].x+Width/2),round(ball.y*zoom+offsetY-balls[0].y+Height/2)],round(ball.rad*zoom))
             pygame.draw.rect(screen,(255,255,255),pygame.Rect(offsetX,offsetY,Width*(zoom),Height*(zoom)),1)
 
             ## logic for writing text on screen
