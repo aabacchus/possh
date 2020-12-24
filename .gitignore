@@ -1,3 +1,5 @@
 images/
 media/
 a.out
+*.webm
+positions.txt
