@@ -1,10 +1,10 @@
 images:
 	mkdir -p images
 compile:
-	g++ pc-nographics-salt.cpp -o pc-nographics-salt
+	g++ pc-nographics-merge.cpp -o pc-nographics-merge
 positions.txt: compile
-	./pc-nographics-salt > positions.txt
+	./pc-nographics-merge > positions.txt
 frames: positions.txt images
 	python p-graphicsonly.py
 %.webm: frames
-	ffmpeg -r 15 -i images/s_%04d.jpeg -start_number 001 $@
+	ffmpeg -r 15 -i images/s_%04d.jpeg $@
