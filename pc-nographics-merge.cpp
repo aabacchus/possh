@@ -18,8 +18,8 @@ class Particle {
 		float x = std::rand() % Width;
 		float y = std::rand() % Height;
 		float m = std::rand()%10;//*pow(10,24);
-		float vx = std::rand()%4-2;
-		float vy = std::rand()%4-2;
+		float vx = 0.;//std::rand()%4-2; // 0 so that there is 0 total momentum.
+		float vy = 0.;//std::rand()%4-2;
 		Particle(){
 		}
 		void move() {
