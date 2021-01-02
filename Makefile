@@ -1,9 +1,9 @@
 images:
 	mkdir -p images
 compile:
-	g++ pc-nographics-merge.cpp -o pc-nographics-merge
+	g++ pc-nographics-merge.cpp -o pc-nographics-merge.bin
 positions.txt: compile
-	./pc-nographics-merge > positions.txt
+	./pc-nographics-merge.bin > positions.txt
 frames: positions.txt images
 	python p-graphicsonly.py
 %.webm: frames
