@@ -99,7 +99,7 @@ def main():
                     #print(event.pos)
                     mouse_down = False
                     mouse_end = event.pos
-            if event.type == pygame.MOUSEWHEEL:
+            if event.type == pygame.MOUSEWHEEL: ## pygame.MOUSEWHEEL is only supported in pygame>=2.0.0
                 #print("scroll: ",event.y)
                 zoom += event.y/100
                 offsetX -= pygame.mouse.get_pos()[0]*event.y/100
